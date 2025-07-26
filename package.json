@@ -4,15 +4,14 @@
   "description": "Generador de Código QR para URLs, con backend en Node.js\r No hay librerias de dev instaladas, se está desplegando con Vercel",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "keywords": [],
-  "author": "Alex Cuadro",
+  "author": "EduAlex",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.20.3",
-    "express": "^4.21.2",
-    "qrcode": "^1.5.4"
+    "body-parser": "2.2.0",
+    "express": "5.1.0",
+    "qrcode": "1.5.4"
   }
 }
