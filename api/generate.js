@@ -1,13 +1,13 @@
-const qrcode = require('qrcode');
+import { toDataURL } from 'qrcode';
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
     if (req.method === 'POST') {
         const { text, size, color, backgroundColor } = req.body;
 
         if (!text) return res.status(400).json({ error: 'Texto o URL es requerido' });
 
         try {
-            const qrCode = await qrcode.toDataURL(text, {
+            const qrCode = await toDataURL(text, {
                 width: size || 200,
                 color: {
                     dark: color || '#000000',
