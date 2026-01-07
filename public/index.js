@@ -51,7 +51,8 @@ const toggleButton = document.getElementById("toggleColorInputs");
 const colorInputs = document.getElementById("colorInputs");
 
 toggleButton.addEventListener("click", () => {
-  if (colorInputs.style.display === "none") {
+  const isHidden = window.getComputedStyle(colorInputs).display === "none";
+  if (isHidden) {
     colorInputs.style.display = "flex";
     toggleButton.innerHTML = "⚙️ Ocultar opciones avanzadas";
   } else {
