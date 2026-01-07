@@ -1,7 +1,7 @@
 {
-  "name": "8_qr_code",
+  "name": "qrcode-generator",
   "version": "1.2.0",
-  "description": "Generador de Código QR para URLs, con backend en Node.js\r No hay librerias de dev instaladas, se está desplegando con Vercel",
+  "description": "Generador de Código QR para URLs, con backend en Node.js y Express",
   "main": "server.js",
   "type": "module",
   "scripts": {
