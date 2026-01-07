@@ -41,29 +41,27 @@
     <main>
       <section class="content">
         <header class="column">
-          <h1><span style="color: #007bff">QR</span> GEN</h1>
-          <p>Genera QR desde url o texto</p>
+          <div class="logo-wrapper">
+            <h1><span class="qr-text">QR</span><span class="gen-text">GEN</span></h1>
+            <div class="subtitle-wrapper">
+              <p class="subtitle">Crea códigos QR únicos al instante</p>
+            </div>
+          </div>
         </header>
         <div class="column">
-          <form id="qrForm">
-            <input
-              type="text"
-              id="textInput"
-              placeholder="Ingresa una URL o texto"
-              autofocus
-              maxlength="80"
-              required
-            />
-            <button type="button" id="toggleColorInputs">Más opciones</button>
-            <div
-              id="colorInputs"
-              style="
-                display: none;
-                flex-direction: column;
-                gap: 10px;
-                margin-bottom: 10px;
-              "
-            >
+          <form id="qrForm" class="glass-card">
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="textInput"
+                placeholder="Ingresa una URL o texto mágico..."
+                autofocus
+                maxlength="80"
+                required
+              />
+            </div>
+            <button type="button" id="toggleColorInputs" class="toggle-btn">⚙️ Opciones avanzadas</button>
+            <div id="colorInputs">
               <input
                 type="number"
                 id="sizeInput"
@@ -72,30 +70,29 @@
                 max="1000"
               />
               <label for="color">Color del QR y del Fondo:</label>
-              <div style="display: flex; gap: 10px">
+              <div class="color-pickers-wrapper">
                 <input
                   type="color"
                   id="color"
                   name="color"
                   value="#000000"
-                  style="width: 200px"
                 />
                 <input
                   type="color"
                   id="backgroundColor"
                   name="backgroundColor"
                   value="#ffffff"
-                  style="width: 200px"
                 />
               </div>
             </div>
-            <button class="submit-button" type="submit">Generar QR</button>
+            <button class="submit-button" type="submit">
+              <span>Generar QR</span>
+            </button>
           </form>
           <output id="result">
             <img id="qrCode" alt="" />
             <a
               id="downloadBtn"
-              style="display: none"
               download="codigoQREduAlex.png"
             >
               <button class="button-for-download">Descargar QR</button>
