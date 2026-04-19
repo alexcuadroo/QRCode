@@ -1,5 +1,6 @@
 import { toDataURL } from 'qrcode';
 
+
 export default async (req, res) => {
     if (req.method === 'POST') {
         const { text, size, color, backgroundColor } = req.body;
