@@ -20,7 +20,16 @@ const corsOptions = {
 
 app.use(helmet());
 app.use(compression());
-app.use(json());
+app.use(json({ limit: '2mb' }));
+
+app.use((err, req, res, next) => {
+    if (err.type === 'entity.too.large') {
+        return res.status(413).json({ error: 'El archivo es demasiado grande. Máximo 2MB.' });
+    }
+    console.error(err);
+    res.status(500).json({ error: 'Error del servidor' });
+});
+
 app.use(serveStatic(join(__dirname, 'public')));
 app.use('/api/generate', generate);
 app.get('/api/qr', cors(corsOptions), generatePublic);

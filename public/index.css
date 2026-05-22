@@ -141,6 +141,30 @@ form {
   -moz-appearance: textfield;
 }
 
+.upload-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 3px;
+  border: 1.5px solid var(--gray-200);
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--gray-400);
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.upload-logo:hover {
+  border-color: var(--gray-400);
+  color: var(--black);
+}
+
+.upload-logo.active {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
 .controls input[type="number"]::-webkit-inner-spin-button,
 .controls input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -199,6 +223,23 @@ form {
   justify-content: center;
   padding: 48px;
   color: var(--gray-400);
+}
+
+.error {
+  color: #ef4444;
+  font-size: 14px;
+  padding: 16px;
+  background: #fef2f2;
+  border-radius: 8px;
+  border: 1px solid #fecaca;
+}
+
+@media (prefers-color-scheme: dark) {
+  .error {
+    background: #2a1a1a;
+    border-color: #7f1d1d;
+    color: #fca5a5;
+  }
 }
 
 .download-btn {

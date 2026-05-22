@@ -3,7 +3,27 @@ const textInput = document.getElementById("textInput");
 const sizeInput = document.getElementById("sizeInput");
 const colorInput = document.getElementById("color");
 const bgColorInput = document.getElementById("bgColor");
+const logoInput = document.getElementById("logoInput");
 const result = document.getElementById("result");
+const logoLabel = document.querySelector(".upload-logo");
+
+let logoData = null;
+
+function showError(msg) {
+  result.innerHTML = `<p class="error">${msg}</p>`;
+}
+
+logoInput.addEventListener("change", async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    logoData = e.target.result;
+    logoLabel.classList.add("active");
+  };
+  reader.readAsDataURL(file);
+});
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -24,6 +44,7 @@ form.addEventListener("submit", async (e) => {
         size: sizeInput.value,
         color: colorInput.value,
         backgroundColor: bgColorInput.value,
+        logo: logoData,
       }),
     });
 
@@ -41,12 +62,10 @@ form.addEventListener("submit", async (e) => {
       `;
       result.querySelector(".download-btn").scrollIntoView({ behavior: "smooth", block: "nearest" });
     } else {
-      result.innerHTML = '';
-      alert(data.error || "Error");
+      showError(data.error || "Error al generar");
     }
   } catch {
-    result.innerHTML = '';
-    alert("Error al generar");
+    showError("Error al generar");
   } finally {
     btn.innerHTML = original;
     btn.disabled = false;

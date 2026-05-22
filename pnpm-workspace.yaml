@@ -1,1 +1,4 @@
 packages: []
+allowBuilds:
+  canvas: set this to true or false
+  sharp: true
