@@ -1,4 +1,1 @@
-onlyBuiltDependencies: []
-minimumReleaseAge: 1440
-blockExoticSubdeps: true
-strictDepBuilds: true
+packages: []
