@@ -1,86 +1,54 @@
-document.getElementById("qrForm").addEventListener("submit", async (e) => {
+const form = document.getElementById("qrForm");
+const textInput = document.getElementById("textInput");
+const sizeInput = document.getElementById("sizeInput");
+const colorInput = document.getElementById("color");
+const bgColorInput = document.getElementById("bgColor");
+const result = document.getElementById("result");
+
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
+  
+  const btn = form.querySelector('button[type="submit"]');
+  const original = btn.innerHTML;
+  btn.innerHTML = '<svg class="spinner" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>';
+  btn.disabled = true;
 
-  const text = document.getElementById("textInput").value;
-  const size = document.getElementById("sizeInput").value;
-  const color = document.getElementById("color").value;
-  const backgroundColor = document.getElementById("backgroundColor").value;
-
-  const submitBtn = document.querySelector('#qrForm button[type="submit"]');
-  const originalText = submitBtn.innerHTML;
-  submitBtn.innerHTML = '<span>Generando...</span>';
-  submitBtn.disabled = true;
-  submitBtn.style.opacity = '0.7';
+  result.innerHTML = '<div class="loader"><svg class="spinner" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" stroke-opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg></div>';
 
   try {
-    const response = await fetch("/api/generate", {
+    const res = await fetch("/api/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text, size, color, backgroundColor }),
+      body: JSON.stringify({
+        text: textInput.value,
+        size: sizeInput.value,
+        color: colorInput.value,
+        backgroundColor: bgColorInput.value,
+      }),
     });
-    const data = await response.json();
+
+    const data = await res.json();
 
     if (data.qrCode) {
-      const qrCodeImage = document.getElementById("qrCode");
-      qrCodeImage.src = data.qrCode;
-
-      const downloadBtn = document.getElementById("downloadBtn");
-      downloadBtn.href = data.qrCode;
-      downloadBtn.style.display = "block";
-      
-      // Agregar efecto de éxito
-      submitBtn.innerHTML = '<span>¡Listo!</span>';
-      setTimeout(() => {
-        submitBtn.innerHTML = originalText;
-        submitBtn.style.opacity = '1';
-      }, 2000);
+      result.innerHTML = `
+        <img id="qrCode" src="${data.qrCode}" alt="QR" />
+        <a class="download-btn" href="${data.qrCode}" download="qr.png">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+          </svg>
+          Descargar
+        </a>
+      `;
+      result.querySelector(".download-btn").scrollIntoView({ behavior: "smooth", block: "nearest" });
     } else {
-      alert(data.error || "Error al generar el QR");
-      submitBtn.innerHTML = originalText;
-      submitBtn.style.opacity = '1';
+      result.innerHTML = '';
+      alert(data.error || "Error");
     }
-  } catch (err) {
-    alert("Error al generar el QR");
-    submitBtn.innerHTML = originalText;
-    submitBtn.style.opacity = '1';
+  } catch {
+    result.innerHTML = '';
+    alert("Error al generar");
   } finally {
-    submitBtn.disabled = false;
+    btn.innerHTML = original;
+    btn.disabled = false;
   }
 });
-const toggleButton = document.getElementById("toggleColorInputs");
-const colorInputs = document.getElementById("colorInputs");
-
-toggleButton.addEventListener("click", () => {
-  const isHidden = window.getComputedStyle(colorInputs).display === "none";
-  if (isHidden) {
-    colorInputs.style.display = "flex";
-    toggleButton.innerHTML = "⚙️ Ocultar opciones avanzadas";
-  } else {
-    colorInputs.style.display = "none";
-    toggleButton.innerHTML = "⚙️ Opciones avanzadas";
-  }
-});
-
-const openBannerLink = document.getElementById("openBanner");
-const overlay = document.getElementById("overlay");
-const banner = document.getElementById("banner");
-const closeBannerBtn = document.getElementById("closeBanner");
-
-function showBanner() {
-  overlay.style.display = "block";
-  banner.style.display = "block";
-}
-
-function hideBanner() {
-  overlay.style.display = "none";
-  banner.style.display = "none";
-}
-
-openBannerLink.addEventListener("click", function (event) {
-  event.preventDefault();
-  showBanner();
-});
-
-closeBannerBtn.addEventListener("click", hideBanner);
-
-overlay.addEventListener("click", hideBanner);
